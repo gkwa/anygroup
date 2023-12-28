@@ -1,0 +1,199 @@
+** Find go files and output function signatures and variable declarations.
+
+Motivation: learn how openapitools/openapi-generator-cli works by
+conversing with gpt.
+
+Minutia: feeding the output of openapi-generator-cli to gpt exceeds
+token limits so perhaps just feeding gpt signatures might make getting
+coding help easier.
+
+** motivation
+
+*** example usage
+
+#+begin_example
+make install
+
+cd /tmp
+curl -O https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml
+docker run --rm \
+  -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+  -i /local/petstore.yaml \
+  -g go \
+  -o /local/out/go
+anygroup
+#+end_example
+
+*** result
+
+#+begin_example
+out/go/api_pets.go: struct type ApiCreatePetsRequest struct { ctx, ApiService }
+out/go/api_pets.go: function Execute() error
+out/go/api_pets.go: function CreatePets(ctx) ApiCreatePetsRequest
+out/go/api_pets.go: function CreatePetsExecute(r) error
+out/go/api_pets.go: var var localVarHTTPMethod  []ast.Expr{(*ast.SelectorExpr)(0xc0000b0378)}
+out/go/api_pets.go: var var localVarPostBody &{1141 0xc000092870 false}
+out/go/api_pets.go: var var formFiles &{1176 <nil> formFile}
+out/go/api_pets.go: var var v Error
+out/go/api_pets.go: struct type ApiListPetsRequest struct { ctx, ApiService, limit }
+out/go/api_pets.go: function Limit(limit) ApiListPetsRequest
+out/go/api_pets.go: function ListPets(ctx) ApiListPetsRequest
+out/go/api_pets.go: function ListPetsExecute(r) error
+out/go/api_pets.go: var var localVarHTTPMethod  []ast.Expr{(*ast.SelectorExpr)(0xc0000b0a08)}
+out/go/api_pets.go: var var localVarPostBody &{4126 0xc0000932f0 false}
+out/go/api_pets.go: var var formFiles &{4161 <nil> formFile}
+out/go/api_pets.go: var var localVarReturnValue &{4195 <nil> Pet}
+out/go/api_pets.go: struct type ApiShowPetByIdRequest struct { ctx, ApiService, petId }
+out/go/api_pets.go: function ShowPetById(ctx, petId) ApiShowPetByIdRequest
+out/go/api_pets.go: function ShowPetByIdExecute(r) error
+out/go/api_pets.go: var var localVarHTTPMethod  []ast.Expr{(*ast.SelectorExpr)(0xc0000b10e0)}
+out/go/api_pets.go: var var localVarPostBody &{7616 0xc000093dd0 false}
+out/go/api_pets.go: var var formFiles &{7651 <nil> formFile}
+out/go/api_pets.go: var var localVarReturnValue &{7685 Pet}
+out/go/client.go: var var JsonCheck  []ast.Expr{(*ast.CallExpr)(0xc0000fe780)}
+out/go/client.go: var var XmlCheck  []ast.Expr{(*ast.CallExpr)(0xc0000fe7c0)}
+out/go/client.go: var var queryParamSplit  []ast.Expr{(*ast.CallExpr)(0xc0000fe800)}
+out/go/client.go: var var queryDescape  []ast.Expr{(*ast.CallExpr)(0xc0000fe8c0)}
+out/go/client.go: struct type APIClient struct { cfg, common, PetsAPI }
+out/go/client.go: struct type service struct { client }
+out/go/client.go: function NewAPIClient(cfg)
+out/go/client.go: function atoi(in) int, error
+out/go/client.go: function selectHeaderContentType(contentTypes) string
+out/go/client.go: function selectHeaderAccept(accepts) string
+out/go/client.go: function contains(haystack, needle) bool
+out/go/client.go: function typeCheckParameter(obj, expected, name) error
+out/go/client.go: function parameterValueToString(obj, key) string
+out/go/client.go: var var param, ok  []ast.Expr{(*ast.TypeAssertExpr)(0xc00012c300)}
+out/go/client.go: function parameterAddToHeaderOrQuery(headerOrQueryParams, keyPrefix, obj, collectionType)
+out/go/client.go: var var v  []ast.Expr{(*ast.CallExpr)(0xc0000ffc80)}
+out/go/client.go: var var value  []ast.Expr{(*ast.BasicLit)(0xc00012e6c0)}
+out/go/client.go: var var indValue  []ast.Expr{(*ast.CallExpr)(0xc000130300)}
+out/go/client.go: var var lenIndValue  []ast.Expr{(*ast.CallExpr)(0xc000130400)}
+out/go/client.go: var var arrayValue  []ast.Expr{(*ast.CallExpr)(0xc000130500)}
+out/go/client.go: var var indValue  []ast.Expr{(*ast.CallExpr)(0xc000130700)}
+out/go/client.go: function parameterToJson(obj) string, error
+out/go/client.go: function callAPI(request) error
+out/go/client.go: function GetConfig()
+out/go/client.go: struct type formFile struct { fileBytes, fileName, formFileName }
+out/go/client.go: function prepareRequest(ctx, path, method, postBody, headerParams, queryParams, formParams, formFiles) error
+out/go/client.go: var var body &{7262 0xc000132840}
+out/go/client.go: function decode(v, b, contentType) error
+out/go/client.go: function addFile(w, fieldName, path) error
+out/go/client.go: function reportError(format, a) error
+out/go/client.go: function newStrictDecoder(data)
+out/go/client.go: function setBody(body, contentType) error
+out/go/client.go: var var bs &{13360 <nil> byte}
+out/go/client.go: function detectContentType(body) string
+out/go/client.go: function parseCacheControl(headers) cacheControl
+out/go/client.go: function CacheExpires(r)
+out/go/client.go: var var expires &{time Time}
+out/go/client.go: function strlen(s) int
+out/go/client.go: struct type GenericOpenAPIError struct { body, error, model }
+out/go/client.go: function Error() string
+out/go/client.go: function Body()
+out/go/client.go: function Model()
+out/go/client.go: function formatErrorMessage(status, v) string
+out/go/configuration.go: function String() string
+out/go/configuration.go: var var ContextServerIndex  []ast.Expr{(*ast.CallExpr)(0xc00017c240)}
+out/go/configuration.go: var var ContextOperationServerIndices  []ast.Expr{(*ast.CallExpr)(0xc00017c2c0)}
+out/go/configuration.go: var var ContextServerVariables  []ast.Expr{(*ast.CallExpr)(0xc00017c300)}
+out/go/configuration.go: var var ContextOperationServerVariables  []ast.Expr{(*ast.CallExpr)(0xc00017c380)}
+out/go/configuration.go: struct type BasicAuth struct { UserName, Password }
+out/go/configuration.go: struct type APIKey struct { Key, Prefix }
+out/go/configuration.go: struct type ServerVariable struct { Description, DefaultValue, EnumValues }
+out/go/configuration.go: struct type ServerConfiguration struct { URL, Description, Variables }
+out/go/configuration.go: struct type Configuration struct { Host, Scheme, DefaultHeader, UserAgent, Debug, Servers, OperationServers, HTTPClient }
+out/go/configuration.go: function NewConfiguration()
+out/go/configuration.go: function AddDefaultHeader(key, value)
+out/go/configuration.go: function URL(index, variables) string, error
+out/go/configuration.go: function ServerURL(index, variables) string, error
+out/go/configuration.go: function getServerIndex(ctx) int, error
+out/go/configuration.go: function getServerOperationIndex(ctx, endpoint) int, error
+out/go/configuration.go: function getServerVariables(ctx) error
+out/go/configuration.go: function getServerOperationVariables(ctx, endpoint) error
+out/go/configuration.go: function ServerURLWithContext(ctx, endpoint) string, error
+out/go/model_error.go: var var _ MappedNullable []ast.Expr{(*ast.UnaryExpr)(0xc000183c00)}
+out/go/model_error.go: struct type Error struct { Code, Message }
+out/go/model_error.go: function NewError(code, message)
+out/go/model_error.go: function NewErrorWithDefaults()
+out/go/model_error.go: function GetCode() int32
+out/go/model_error.go: var var ret int32
+out/go/model_error.go: function GetCodeOk() bool
+out/go/model_error.go: function SetCode(v)
+out/go/model_error.go: function GetMessage() string
+out/go/model_error.go: var var ret string
+out/go/model_error.go: function GetMessageOk() bool
+out/go/model_error.go: function SetMessage(v)
+out/go/model_error.go: function MarshalJSON() error
+out/go/model_error.go: function ToMap() error
+out/go/model_error.go: function UnmarshalJSON(data) error
+out/go/model_error.go: struct type NullableError struct { value, isSet }
+out/go/model_error.go: function Get()
+out/go/model_error.go: function Set(val)
+out/go/model_error.go: function IsSet() bool
+out/go/model_error.go: function Unset()
+out/go/model_error.go: function NewNullableError(val)
+out/go/model_error.go: function UnmarshalJSON(src) error
+out/go/model_pet.go: var var _ MappedNullable []ast.Expr{(*ast.UnaryExpr)(0xc0001967a0)}
+out/go/model_pet.go: struct type Pet struct { Id, Name, Tag }
+out/go/model_pet.go: function NewPet(id, name)
+out/go/model_pet.go: function NewPetWithDefaults()
+out/go/model_pet.go: function GetId() int64
+out/go/model_pet.go: var var ret int64
+out/go/model_pet.go: function GetIdOk() bool
+out/go/model_pet.go: function SetId(v)
+out/go/model_pet.go: function GetName() string
+out/go/model_pet.go: var var ret string
+out/go/model_pet.go: function GetNameOk() bool
+out/go/model_pet.go: function SetName(v)
+out/go/model_pet.go: function GetTag() string
+out/go/model_pet.go: function GetTagOk() bool
+out/go/model_pet.go: function HasTag() bool
+out/go/model_pet.go: function SetTag(v)
+out/go/model_pet.go: function MarshalJSON() error
+out/go/model_pet.go: function ToMap() error
+out/go/model_pet.go: function UnmarshalJSON(data) error
+out/go/model_pet.go: struct type NullablePet struct { value, isSet }
+out/go/model_pet.go: function Get()
+out/go/model_pet.go: function Set(val)
+out/go/model_pet.go: function IsSet() bool
+out/go/model_pet.go: function Unset()
+out/go/model_pet.go: function NewNullablePet(val)
+out/go/model_pet.go: function UnmarshalJSON(src) error
+out/go/response.go: struct type APIResponse struct { Message, Operation, RequestURL, Method, Payload }
+out/go/response.go: function NewAPIResponse(r)
+out/go/response.go: function NewAPIResponseWithError(errorMessage)
+out/go/test/api_pets_test.go: function Test_openapi_PetsAPIService(t)
+out/go/test/api_pets_test.go: var var petId string
+out/go/utils.go: function PtrBool(v)
+out/go/utils.go: function PtrInt(v)
+out/go/utils.go: function PtrInt32(v)
+out/go/utils.go: function PtrInt64(v)
+out/go/utils.go: function PtrFloat32(v)
+out/go/utils.go: function PtrFloat64(v)
+out/go/utils.go: function PtrString(v)
+out/go/utils.go: function PtrTime(v)
+out/go/utils.go: struct type NullableBool struct { value, isSet }
+out/go/utils.go: function Get()
+out/go/utils.go: function Set(val)
+out/go/utils.go: function IsSet() bool
+out/go/utils.go: function Unset()
+out/go/utils.go: function NewNullableBool(val)
+out/go/utils.go: function MarshalJSON() error
+out/go/utils.go: function UnmarshalJSON(src) error
+out/go/utils.go: struct type NullableInt struct { value, isSet }
+out/go/utils.go: function NewNullableInt(val)
+out/go/utils.go: struct type NullableInt32 struct { value, isSet }
+out/go/utils.go: function NewNullableInt32(val)
+out/go/utils.go: struct type NullableInt64 struct { value, isSet }
+out/go/utils.go: function NewNullableInt64(val)
+out/go/utils.go: struct type NullableFloat32 struct { value, isSet }
+out/go/utils.go: function NewNullableFloat32(val)
+out/go/utils.go: struct type NullableFloat64 struct { value, isSet }
+out/go/utils.go: function NewNullableFloat64(val)
+out/go/utils.go: struct type NullableString struct { value, isSet }
+out/go/utils.go: function NewNullableString(val)
+out/go/utils.go: struct type NullableTime struct { value, isSet }
+out/go/utils.go: function NewNullableTime(val)
+out/go/utils.go: function IsNil(i) bool
+#+end_example
